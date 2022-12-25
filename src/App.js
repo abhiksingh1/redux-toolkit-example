@@ -1,21 +1,28 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
-  render() {
+import { useSelector, useDispatch } from 'react-redux';
+import { increment, decrement, incrementByValue } from './features/counter/counterSlice';
+const App = () => {
+
+    const count = useSelector((state) => state.counter.value);
+    const dispatch = useDispatch();
+    const [val, setVal] = useState(0);
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <h1>Counter Example!</h1>
+        <br></br>
+        
+        <h3>Counter : {count}</h3>
+        <button onClick={()=>dispatch(increment())}>ADD</button>
+        <button onClick={()=>dispatch(decrement())}>SUBTRACT</button>
+        <input value={val} onChange={(e)=>setVal(e.target.value)}></input>
+        <button onClick={()=>dispatch(incrementByValue(Number(val) || 0))}>ADD VALUE</button>
+
       </div>
     );
-  }
+
 }
 
 export default App;
